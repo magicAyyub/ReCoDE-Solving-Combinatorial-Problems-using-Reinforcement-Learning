@@ -17,7 +17,7 @@ throughout the development and plan accordingly.
 
 
 <!-- Your exemplar title. Make it sound catchy! -->
-# This is my exemplar title
+# Solving combinatorial problems using Reinforcement Learning
 
 <!-- A brief description of your exemplar, which may include an image -->
 This is a brief abstract of my exemplar, which includes a representative image.
