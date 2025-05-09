@@ -19,6 +19,31 @@ throughout the development and plan accordingly.
 <!-- Your exemplar title. Make it sound catchy! -->
 # Solving combinatorial problems using Reinforcement Learning
 
+
+<!-- Roadmap -->
+# Roadmap
+
+## Define reinforcement learning algorithm
+
+Tabular q-learning, Reinforce.
+Thursday 22nd May.
+
+## Define environment
+
+Example Monty Hall problem.
+Thursday 5th June.
+
+## Define second environment
+
+Graph colouring.
+Thursday 19th June.
+
+## Notebooks
+
+Make it accessibe and documented.
+Friday 4th July.
+
+
 <!-- A brief description of your exemplar, which may include an image -->
 This is a brief abstract of my exemplar, which includes a representative image.
 ![Scikit Camera Image](docs/assets/readme-img.png)
