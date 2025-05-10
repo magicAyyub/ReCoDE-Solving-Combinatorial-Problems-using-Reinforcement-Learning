@@ -17,7 +17,7 @@ throughout the development and plan accordingly.
 
 
 <!-- Your exemplar title. Make it sound catchy! -->
-# Solving combinatorial problems using Reinforcement Learning
+# Solving Combinatorial Problems using Reinforcement Learning
 
 
 <!-- Roadmap -->
@@ -25,7 +25,9 @@ throughout the development and plan accordingly.
 
 ## Define reinforcement learning algorithm
 
-Tabular q-learning, Reinforce.
+0. UV setup
+1. Algorithm: Tabular q-learning, Reinforce.
+2. Weights & Biases integration
 Thursday 22nd May.
 
 ## Define environment
@@ -40,7 +42,7 @@ Thursday 19th June.
 
 ## Notebooks
 
-Make it accessibe and documented.
+Make it accessible and documented.
 Friday 4th July.
 
 
