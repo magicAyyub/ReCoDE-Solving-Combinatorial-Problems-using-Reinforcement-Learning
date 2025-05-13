@@ -25,9 +25,6 @@ throughout the development and plan accordingly.
 
 ## Define reinforcement learning algorithm
 
-0. UV setup
-1. Algorithm: Tabular q-learning, Reinforce.
-2. Weights & Biases integration
 Thursday 22nd May.
 
 ## Define environment
