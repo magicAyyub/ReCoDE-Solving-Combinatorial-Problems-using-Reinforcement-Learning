@@ -1,7 +1,7 @@
 [project]
-name = "solving-combinatorial-problems-using-reinforcement-learning"
+name = "ReCoDE-Solving-Combinatorial-Problems-using-Reinforcement-Learning"
 version = "0.1.0"
-description = "Add your description here"
+description = "An ReCoDE explainer from Imperial College London for solving combinatorial problems using reinforcement learning."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
