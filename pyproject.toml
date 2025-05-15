@@ -11,5 +11,25 @@ dependencies = [
     "numpy>=2.2.5",
     "pytest>=8.3.5",
     "ray[tune]>=2.46.0",
+    "torch>=2.7.0",
+    "torchvision>=0.22.0",
     "wandb>=0.19.11",
 ]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
