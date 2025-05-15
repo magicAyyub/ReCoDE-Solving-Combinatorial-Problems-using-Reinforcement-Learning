@@ -15,10 +15,7 @@ resource at the same time. It is important to keep this in mind
 throughout the development and plan accordingly.
 -->
 
-
-<!-- Your exemplar title. Make it sound catchy! -->
 # Solving Combinatorial Problems using Reinforcement Learning
-
 
 <!-- Roadmap -->
 # Roadmap
