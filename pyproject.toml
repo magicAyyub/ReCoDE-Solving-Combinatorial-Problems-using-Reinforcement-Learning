@@ -1,21 +1,45 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "your_project"
+name = "ReCoDE-Solving-Combinatorial-Problems-using-Reinforcement-Learning"
 version = "0.1.0"
-
+description = "An ReCoDE explainer from Imperial College London for solving combinatorial problems using reinforcement learning."
+readme = "README.md"
+requires-python = ">=3.12"
 dependencies = [
-    # Add runtime dependencies here
+    "gymnasium>=1.1.1",
+    "ipykernel>=6.29.5",
+    "loguru>=0.7.3",
+    "numpy>=2.2.5",
+    "pytest>=8.3.5",
+    "ray[tune]>=2.46.0",
+    "torch>=2.7.0",
+    "torchvision>=0.22.0",
+    "wandb>=0.19.11",
 ]
 
-[project.optional-dependencies]
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[dependency-groups]
 dev = [
-    "mkdocs==1.6.1",
-    "mkdocs-include-markdown-plugin==7.1.5",
-    "mkdocs-jupyter==0.25.1",
-    "mkdocs-exclude==1.0.2",
-    "mkdocs-material==9.6.12",
-    "python-markdown-math==0.9"
+    "mkdocs>=1.6.1",
+    "mkdocs-exclude>=1.0.2",
+    "mkdocs-include-markdown-plugin>=7.1.5",
+    "mkdocs-jupyter>=0.25.1",
+    "mkdocs-material>=9.6.14",
+    "python-markdown-math>=0.9",
 ]
