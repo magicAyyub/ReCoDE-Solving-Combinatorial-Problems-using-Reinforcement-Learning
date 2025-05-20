@@ -1588,11 +1588,13 @@ tune = [
 [[package]]
 name = "recode-solving-combinatorial-problems-using-reinforcement-learning"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "gymnasium" },
     { name = "ipykernel" },
     { name = "loguru" },
+    { name = "nbclient" },
+    { name = "nbformat" },
     { name = "numpy" },
     { name = "pytest" },
     { name = "ray", extra = ["tune"] },
@@ -1619,6 +1621,8 @@ requires-dist = [
     { name = "gymnasium", specifier = ">=1.1.1" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "loguru", specifier = ">=0.7.3" },
+    { name = "nbclient", specifier = ">=0.10.2" },
+    { name = "nbformat", specifier = ">=5.10.4" },
     { name = "numpy", specifier = ">=2.2.5" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ray", extras = ["tune"], specifier = ">=2.46.0" },
