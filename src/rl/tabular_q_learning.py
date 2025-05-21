@@ -1,3 +1,16 @@
+"""tabular_q_learning.py
+
+Vanilla tabular Q-Learning.
+
+Example
+-------
+>>> env = gym.make("Taxi-v3")
+>>> cfg = QLearningConfig()
+>>> agent = QLearningAgent(env, cfg)
+>>> agent.train(episodes=5_000)
+>>> agent.test(episodes=100)
+"""
+
 from __future__ import annotations
 
 import time
@@ -26,14 +39,6 @@ class QLearningConfig:
 class QLearningAgent:
     """
     Tabular Q-learning agent for discrete state & action spaces.
-
-    Usage
-    -----
-    >>> env = gym.make("Taxi-v3")
-    >>> cfg = QLearningConfig()
-    >>> agent = QLearningAgent(env, cfg)
-    >>> agent.train(episodes=5_000)
-    >>> agent.test(episodes=100)
     """
 
     def __init__(self, env: gym.Env, cfg: QLearningConfig) -> None:
