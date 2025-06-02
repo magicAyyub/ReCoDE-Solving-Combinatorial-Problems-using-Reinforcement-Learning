@@ -35,9 +35,9 @@ class QLearningConfig:
     """Hyperparameters and miscellaneous settings for :class:`QLearningAgent`.
 
     Attributes:
-        learning_rate (float): Temporal-difference step size :math:`\alpha`.
-        discount_factor (float): Future reward discount :math:`\gamma \in [0, 1]`.
-        epsilon_start (float): Initial exploration rate :math:`\varepsilon`.
+        learning_rate (float): Temporal-difference step size $\alpha$.
+        discount_factor (float): Future reward discount $\gamma \in [0, 1]`.
+        epsilon_start (float): Initial exploration rate $\varepsilon$.
         epsilon_decay (float): Multiplicative decay applied to *ε* after every episode.
         epsilon_min (float): Lower bound for *ε*.
         max_steps_per_episode (int): Hard limit on the length of an episode.
@@ -111,9 +111,11 @@ class QLearningAgent:
         self.log = logger.bind(agent="TabularQLearning")
 
 
-    # ──────────────────────────────── Private helpers ──────────────────────────────── #
+    # ──────────────────────────────────────────────────────────────────────────────── #
+    #                                 Private helpers                                  #
+    # ──────────────────────────────────────────────────────────────────────────────── #
     def _select_action(self, state_idx: int) -> int:
-        """Sample an action via an :math:`\varepsilon`-greedy policy.
+        """Sample an action via an $\varepsilon$-greedy policy.
 
         Args:
             state_idx (int): Discrete state identifier obtained from the environment.
@@ -135,10 +137,10 @@ class QLearningAgent:
         """Apply the one-step Q-learning update rule.
 
         Args:
-            state_idx (int): Index of the pre-transition state :math:`s_t`.
-            action_idx (int): Index of the action :math:`a_t` taken in :math:`s_t`.
-            reward (float): Immediate scalar reward :math:`r_{t+1}`.
-            next_state_idx (int): Index of the successor state :math:`s_{t+1}`.
+            state_idx (int): Index of the pre-transition state $s_t$.
+            action_idx (int): Index of the action $a_t$ taken in $s_t$.
+            reward (float): Immediate scalar reward $r_{t+1}$.
+            next_state_idx (int): Index of the successor state $s_{t+1}$.
         """
         best_next_action: int = int(np.argmax(self.action_value_table[next_state_idx]))
         td_target: float = reward + self.discount_factor * self.action_value_table[
@@ -165,13 +167,15 @@ class QLearningAgent:
         recent: List[float] = reward_history[-window_size:]
         return np.std(recent) < 1e-3 and np.mean(recent) > 0.9
 
-    # ───────────────────────────────────── Public API ───────────────────────────────────── #
+    # ──────────────────────────────────────────────────────────────────────────────── #
+    #                                    Public API                                    #
+    # ──────────────────────────────────────────────────────────────────────────────── #
     def train(
         self,
         episodes: int = 2_000,
         log_interval: int = 100,
     ) -> Tuple[List[float], int, float]:
-        """Perform on-policy learning with :math:`\varepsilon`-greedy exploration.
+        """Perform on-policy learning with $\varepsilon$-greedy exploration.
 
         Args:
             episodes (int, optional): Number of training episodes. Defaults to ``2000``.
@@ -180,10 +184,10 @@ class QLearningAgent:
 
         Returns:
             tuple[list[float], int, float]:
-                * **episode_rewards** - Reward after each episode.
-                * **converged_episode** - Index of the first episode that satisfies
+                * episode_rewards - Reward after each episode.
+                * converged_episode - Index of the first episode that satisfies
                   the convergence test (or ``-1`` if never converged).
-                * **converged_wall_time** - Seconds elapsed until convergence (or
+                * converged_wall_time - Seconds elapsed until convergence (or
                   ``0.0`` if never converged).
         """
         episode_rewards: List[float] = []
