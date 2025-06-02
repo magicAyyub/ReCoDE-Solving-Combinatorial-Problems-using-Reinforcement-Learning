@@ -18,6 +18,7 @@ Example:
     >>> agent.test(episodes=100)
 """
 
+from src.rl.common import *
 from __future__ import annotations
 
 import random
@@ -149,24 +150,6 @@ class QLearningAgent:
         td_error: float = td_target - self.action_value_table[state_idx, action_idx]
         self.action_value_table[state_idx, action_idx] += self.learning_rate * td_error
 
-    @staticmethod
-    def _has_converged(reward_history: List[float], window_size: int = 100) -> bool:
-        """Return ``True`` if recent rewards are both high and stable.
-
-        Args:
-            reward_history (list[float]): Episode-level rewards collected so far.
-            window_size (int, optional): Number of most-recent episodes to inspect.
-                Defaults to ``100``.
-
-        Returns:
-            bool: ``True`` when the standard deviation of recent rewards is below
-            ``1e‑3`` *and* their mean exceeds ``0.9``.
-        """
-        if len(reward_history) < window_size:
-            return False
-        recent: List[float] = reward_history[-window_size:]
-        return np.std(recent) < 1e-3 and np.mean(recent) > 0.9
-
     # ──────────────────────────────────────────────────────────────────────────────── #
     #                                    Public API                                    #
     # ──────────────────────────────────────────────────────────────────────────────── #
@@ -231,7 +214,7 @@ class QLearningAgent:
                 )
 
             # Early stopping
-            if converged_episode == -1 and self._has_converged(episode_rewards):
+            if converged_episode == -1 and has_converged(episode_rewards):
                 converged_episode = episode_idx
                 converged_wall_time = time.perf_counter() - start_time
                 self.log.success(
