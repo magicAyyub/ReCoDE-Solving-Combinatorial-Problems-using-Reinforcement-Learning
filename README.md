@@ -19,25 +19,17 @@ throughout the development and plan accordingly.
 
 <!-- Roadmap -->
 # Roadmap
-
-## Define reinforcement learning algorithm
-
-Thursday 22nd May.
-
-## Define environment
-
-Example Monty Hall problem.
-Thursday 5th June.
-
-## Define second environment
-
-Graph colouring.
-Thursday 19th June.
-
-## Notebooks
-
-Make it accessible and documented.
-Friday 4th July.
+- [X] Define the reinforcement learning algorithm(s) (**Thursday 22nd May**)
+    - [X] Tabular Q-learning (Thursday 22nd May)
+    - [X] Stochastic DQN(Thursday 22nd May)
+- [ ] First sequential-decision making environment: Monty Hall problem (**Friday 13th June**)
+- [ ] Second sequential-decision making environment: Graph Colouring problem or Knapsack problem (**Monday 23rd June**)
+- [ ] Hyperparameter tuning and running of experiments as defined in a Jupyter notebook, using the defined interfaces of the two algorithms with *Weights & Biases*. (**Friday 27th June**)
+    - [ ] Add Weights & Biases integration to the two RL algorithms for better experimental tracking practices (Friday 27th June)
+- [ ] Define any unit-tests (with `pytest`) and any `rustlings` style exercises for the RL algorithms and environments themselves, by using `deterministic=True` in the config and setting a `seed` in the config (**Wednesday 9th July**)
+- [ ] Add notebook documentation/literate programming documentation (**Monday 14th July**)
+- [ ] Create a more informative README.md (**Friday 18th July**)
+- [ ] Update all the documentation on the website/gh-pages, ensure all docs are neat and teady (**Wednesday 23rd July**)
 
 
 <!-- A brief description of your exemplar, which may include an image -->
