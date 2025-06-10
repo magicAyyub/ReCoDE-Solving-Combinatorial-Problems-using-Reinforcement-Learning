@@ -15,5 +15,5 @@ def has_converged(reward_history: list[float], window_size: int = 100) -> bool:
     """
     if len(reward_history) < window_size:
         return False
-    recent: List[float] = reward_history[-window_size:]
+    recent = reward_history[-window_size:]
     return np.std(recent) < 1e-3 and np.mean(recent) > 0.9
