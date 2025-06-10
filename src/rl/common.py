@@ -1,7 +1,7 @@
 from typing import List
 import numpy as np
 
-def has_converged(reward_history: List[float], window_size: int = 100) -> bool:
+def has_converged(reward_history: list[float], window_size: int = 100) -> bool:
     """Return ``True`` if recent rewards are both high and stable.
 
     Args:
