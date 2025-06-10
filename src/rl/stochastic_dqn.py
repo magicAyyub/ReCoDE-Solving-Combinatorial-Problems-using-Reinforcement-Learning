@@ -19,7 +19,7 @@ References:
 Example
 -------
 >>> import gymnasium as gym
->>> from stochastic_q_learning import (
+>>> from stochastic_dqn import (
 ...     StochasticQLearningAgent,
 ...     StochasticQLearningConfig,
 ... )
