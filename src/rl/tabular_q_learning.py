@@ -24,7 +24,6 @@ from __future__ import annotations
 import random
 import time
 from dataclasses import dataclass
-from typing import List, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -157,7 +156,7 @@ class QLearningAgent:
         self,
         episodes: int = 2_000,
         log_interval: int = 100,
-    ) -> Tuple[List[float], int, float]:
+    ) -> tuple[list[float], int, float]:
         """Perform on-policy learning with $\varepsilon$-greedy exploration.
 
         Args:
@@ -173,7 +172,7 @@ class QLearningAgent:
                 * converged_wall_time - Seconds elapsed until convergence (or
                   ``0.0`` if never converged).
         """
-        episode_rewards: List[float] = []
+        episode_rewards: list[float] = []
         start_time: float = time.perf_counter()
 
         converged_episode: int = -1

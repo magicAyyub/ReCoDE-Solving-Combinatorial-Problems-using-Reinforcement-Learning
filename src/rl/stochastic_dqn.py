@@ -42,7 +42,7 @@ import math
 import random
 from dataclasses import dataclass
 from math import ceil, inf, log2
-from typing import Dict, Iterable, List, Sequence, Tuple
+from typing import Iterable, Sequence
 
 import numpy as np
 import torch
@@ -168,15 +168,15 @@ class _ReplayBuffer:
 
     def __init__(self, capacity: int) -> None:
         self._capacity = capacity
-        self._storage: List[
-            Tuple[np.ndarray, int, float, np.ndarray, bool]
+        self._storage: list[
+            tuple[np.ndarray, int, float, np.ndarray, bool]
         ] = []
 
     def __len__(self) -> int:
         """Number of elements currently stored."""
         return len(self._storage)
 
-    def add(self, transition: Tuple[np.ndarray, int, float, np.ndarray,
+    def add(self, transition: tuple[np.ndarray, int, float, np.ndarray,
                                     bool]) -> None:
         """Add a transition, discarding the oldest one if the buffer is full.
 
@@ -192,7 +192,7 @@ class _ReplayBuffer:
 
     def sample(
             self, batch_size: int
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """Uniformly sample a mini-batch without replacement.
 
         Args:
@@ -239,7 +239,7 @@ class StochasticQLearningAgent:
         self,
         state_size: int,
         action_size: int,
-        index2action: Dict[int, Sequence[float]],
+        index2action: dict[int, Sequence[float]],
         config: StochasticQLearningConfig | None = None,
     ) -> None:
         self.config = config or StochasticQLearningConfig()
@@ -309,7 +309,7 @@ class StochasticQLearningAgent:
         next_states: torch.Tensor,
         candidate_actions: Iterable[int],
         use_target_net: bool,
-    ) -> Tuple[torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         """Compute maximal action-value and corresponding action index.
 
         Implements the Double Action-Value trick: the online network chooses
