@@ -43,6 +43,7 @@ import random
 from dataclasses import dataclass
 from math import ceil, inf, log2
 from typing import Iterable, Sequence
+from collections import deque
 
 import numpy as np
 import torch
@@ -154,49 +155,54 @@ class _StateActionNetwork(nn.Module):
         return self._head(hidden)
 
 
-# ──────────────────────────── Replay buffer ────────────────────────────
-class _ReplayBuffer:
-    """Fixed-size cyclic buffer used for experience replay.
+# ──────────────────────────── Transition type ────────────────────────────
+"""
+    A transition is a five-tuple *(current_state, action_index, reward,
+    next_state, done_flag)*.
+"""
+Transition = tuple[np.ndarray, int, float, np.ndarray, bool]
 
-    A transition is a five-tuple *(state, action_index, reward,
-    next_state, done_flag)*.  When the buffer is full, the oldest
-    experience is overwritten.
+# ──────────────────────────── Replay buffer ────────────────────────────
+class ReplayBuffer:
+    """Fixed-size cyclic buffer used for experience replay with uniform sampling.
+
+    Internally uses ``collections.deque`` so the oldest transition is evicted
+    automatically once the capacity is exceeded, giving O(1) inserts.
 
     Args:
         capacity: Maximum number of stored transitions.
     """
-
     def __init__(self, capacity: int) -> None:
-        self._capacity = capacity
-        self._storage: list[
-            tuple[np.ndarray, int, float, np.ndarray, bool]
-        ] = []
+        if capacity <= 0:
+            raise ValueError("capacity must be a positive integer")
+        self._data: deque[Transition] = deque(maxlen=capacity)
 
     def __len__(self) -> int:
-        """Number of elements currently stored."""
-        return len(self._storage)
+        """Number of transitions currently stored."""
+        return len(self._data)
 
-    def add(self, transition: tuple[np.ndarray, int, float, np.ndarray,
-                                    bool]) -> None:
-        """Add a transition, discarding the oldest one if the buffer is full.
-
-        Args:
-            transition: Five-tuple as described in the class docstring.
-
-        Returns:
-            None
-        """
-        if len(self._storage) == self._capacity:
-            self._storage.pop(0)
-        self._storage.append(transition)
+    @property
+    def capacity(self) -> int:
+        """Maximum number of transitions that can be stored."""
+        # `deque.maxlen` is read-only and always set.
+        return self._data.maxlen
+    
+    def add(self, transition: Transition) -> None:
+        """Add a transition; oldest is dropped if buffer is full."""
+        self._data.append(transition)
 
     def sample(
-            self, batch_size: int
+        self,
+        batch_size: int,
+        *,
+        dtype: np.dtype | None = np.float32,
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """Uniformly sample a mini-batch without replacement.
 
         Args:
             batch_size: Number of transitions to sample.
+            dtype: Data type for `states`, `next_states`, and `rewards`.
+                   Defaults to ``np.float32`` (common in DL frameworks).
 
         Returns:
             tuple: Five NumPy arrays
@@ -206,17 +212,38 @@ class _ReplayBuffer:
                 next_states (float32): Array with shape (batch_size, state_size)
                 dones (bool): Boolean mask with shape (batch_size,)
         """
+        if batch_size <= 0:
+            raise ValueError("batch_size must be positive")
+        if batch_size > len(self):
+            raise ValueError(
+                f"Cannot sample {batch_size} transitions; buffer holds only {len(self)}."
+            )
+
+        # `random.sample` returns a list of unique elements.
         states, actions, rewards, next_states, dones = zip(
-            *random.sample(self._storage, batch_size)
-        )
-        return (
-            np.vstack(states),
-            np.fromiter(actions, dtype=np.int64),
-            np.fromiter(rewards, dtype=np.float32),
-            np.vstack(next_states),
-            np.fromiter(dones, dtype=np.bool_),
+            *random.sample(self._data, batch_size)
         )
 
+        states_arr = np.vstack(states).astype(dtype, copy=False)
+        next_states_arr = np.vstack(next_states).astype(dtype, copy=False)
+        
+        rewards_arr = np.fromiter(rewards, dtype=dtype, count=batch_size)
+        actions_arr = np.fromiter(actions, dtype=np.int64, count=batch_size)
+        dones_arr = np.fromiter(dones, dtype=np.bool_, count=batch_size)
+
+        return states_arr, actions_arr, rewards_arr, next_states_arr, dones_arr
+
+    def clear(self) -> None:
+        """Remove all stored transitions."""
+        self._data.clear()
+
+    def extend(self, transitions: list[Transition]) -> None:
+        """Bulk-add a list of transitions."""
+        for t in transitions:
+            self._data.append(t)
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(size={len(self)}, capacity={self.capacity})"
 
 # ────────────────────────── Main agent class ──────────────────────────
 class StochasticQLearningAgent:
