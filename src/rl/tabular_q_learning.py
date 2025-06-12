@@ -31,7 +31,7 @@ from gymnasium.wrappers import RecordVideo
 from loguru import logger
 
 @dataclass
-class QLearningConfig:
+class QLearningConfig(slots=True):
     """Hyperparameters and miscellaneous settings for :class:`QLearningAgent`.
 
     Attributes:
