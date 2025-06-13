@@ -30,8 +30,8 @@ import numpy as np
 from gymnasium.wrappers import RecordVideo
 from loguru import logger
 
-@dataclass
-class QLearningConfig(slots=True):
+@dataclass(slots=True)
+class QLearningConfig:
     """Hyperparameters and miscellaneous settings for :class:`QLearningAgent`.
 
     Attributes:
