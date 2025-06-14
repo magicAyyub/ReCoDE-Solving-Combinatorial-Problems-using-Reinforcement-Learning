@@ -81,8 +81,7 @@ class MontyHallEnv(gym.Env):
         # Action Space: Discrete choice, given the number of doors
         self.action_space = spaces.Discrete(self.n_doors)
 
-        # ─── PyGame placeholders ───
-        # These are lazily initialised, as and when needed
+        # ─── PyGame placeholders (lazily initialised) ───
         self._pygame = self._window = self._surface = self._font = None
 
         # ─── Initial episode state ───
@@ -198,7 +197,9 @@ class MontyHallEnv(gym.Env):
         # closed doors (the player's pick and one other).
         n_to_open = min(len(goats_available), len(closed) - 1)
         if n_to_open:
-            to_open = self.np_random.choice(goats_available, size=n_to_open, replace=False)
+            to_open = self.np_random.choice(
+                goats_available, size=n_to_open, replace=False
+            )
             self._state[to_open] = DoorState.GOAT
 
         self._phase = Phase.AFTER_REVEAL
