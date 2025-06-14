@@ -1,6 +1,7 @@
 # General ReCoDE ignore
 __pycache__
 *.egg-info
+test.ipynb 
 
 ## Python ignore
 

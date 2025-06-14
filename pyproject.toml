@@ -11,6 +11,7 @@ dependencies = [
     "nbclient>=0.10.2",
     "nbformat>=5.10.4",
     "numpy>=2.2.5",
+    "pygame>=2.6.1",
     "pytest>=8.3.5",
     "ray[tune]>=2.46.0",
     "torch>=2.7.0",
@@ -49,3 +50,9 @@ dev = [
     "mkdocs-material>=9.6.14",
     "python-markdown-math>=0.9",
 ]
+
+[tool.ruff.lint]
+select = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
