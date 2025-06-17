@@ -64,7 +64,7 @@ class MontyHallEnv(gym.Env):
         if n_doors < 3:
             raise ValueError("Monty Hall requires at least 3 doors.")
         if not (0 < n_cars < n_doors):
-            raise ValueError("n_cars must be between 1 and n_doors - 1.")
+            raise ValueError(f"n_cars must be between 1 and {n_doors - 1}.")
         if render_mode is not None and render_mode not in self.metadata["render_modes"]:
             raise ValueError(f"Unsupported render_mode '{render_mode}'.")
 
