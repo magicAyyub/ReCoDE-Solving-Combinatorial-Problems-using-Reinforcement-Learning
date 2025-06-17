@@ -51,9 +51,9 @@ class MontyHallEnv(gym.Env):
             n_doors (int, optional): Number of total doors in the environment. Defaults to 3.
             n_cars (int, optional): Number of cars behind doors, the rest of doors will be goats.
               Defaults to 1.
-            render_mode (Optional[str], optional): rendering mode of the environment. Defaults to None.
-            seed (Optional[int], optional): controls the random number generation. Note that, setting this
-             will cause deterministic behaviour, mostly useful for debugging only. Defaults to None.
+            render_mode (Literal or None): rendering mode of the environment. Defaults to None (no rendering needed).
+            seed (Int or None): controls the random number generation. Note that, setting this
+             will cause deterministic behaviour, mostly useful for debugging only. Defaults to None (random seed).
 
         Raises:
             ValueError: for any logical errors, such as having less than 3 doors, invalid number of cars,
