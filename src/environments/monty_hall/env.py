@@ -4,9 +4,8 @@ A Monty Hall environment implementation in Gymnasium, customizable with the numb
 """
 
 from enum import Enum, IntEnum, auto
-
 import numpy as np
-from typing import Optional
+from typing import Optional, Literal
 
 import gymnasium as gym
 from gymnasium import spaces
