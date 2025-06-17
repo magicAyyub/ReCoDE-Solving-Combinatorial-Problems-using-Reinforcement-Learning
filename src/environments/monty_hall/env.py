@@ -43,7 +43,7 @@ class MontyHallEnv(gym.Env):
         *,
         n_doors: int = 3,
         n_cars: int = 1,
-        render_mode: Optional[str] = None,
+        render_mode: None | Literal["human", "rgb_array"] = None,
         seed: Optional[int] = None,
     ) -> None:
         """Initialises the customizable Monty Hall environment.
