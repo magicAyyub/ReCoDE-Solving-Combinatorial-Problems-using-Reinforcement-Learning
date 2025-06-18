@@ -3,31 +3,15 @@
 A Monty Hall environment implementation in Gymnasium, customizable with the number of doors and cars.
 """
 
-from enum import Enum, IntEnum, auto
-import numpy as np
+from .renderer import MontyHallPygameRenderer
+from .state import DoorState, Phase
+
 from typing import Optional, Literal
 
+import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 from gymnasium.envs.registration import register
-
-
-class DoorState(IntEnum):
-    """State of each door in the observation vector."""
-
-    CLOSED = 0  # Unopened & unchosen
-    GOAT = 1  # Opened and reveals a goat
-    CAR = 2  # Opened and reveals a car (a win)
-    CHOSEN = 3  # Still closed but currently selected by the player
-
-
-class Phase(Enum):
-    """Progress phase of an episode."""
-
-    AWAITING_FIRST_PICK = auto()
-    AFTER_REVEAL = auto()
-    DONE = auto()
-
 
 class MontyHallEnv(gym.Env):
     """A full Monty Hall implementation that follows Gymnasium's API."""
@@ -83,6 +67,11 @@ class MontyHallEnv(gym.Env):
         # ─── PyGame placeholders (lazily initialised) ───
         self._pygame = self._window = self._surface = self._font = None
 
+        # ─── renderer (optional) ───
+        self._renderer: MontyHallPygameRenderer | None = None
+        if render_mode is not None:
+            self._renderer = MontyHallPygameRenderer(self.n_doors, self.metadata, render_mode)
+            
         # ─── Initial episode state ───
         self.reset(seed=seed)
 
@@ -144,32 +133,27 @@ class MontyHallEnv(gym.Env):
         return self._get_obs(), reward, terminated, truncated, self._get_info()
 
     def render(self, mode: str | None = None):
-        mode = mode or self.render_mode or "human"
-        if mode not in self.metadata["render_modes"]:
-            raise NotImplementedError(f"Unsupported render mode: {mode}")
+        """ Handles the rendering functionality by composition
 
-        # Lazily set up pygame window/surface/font once the first time we render
-        if self._pygame is None:
-            self._init_pygame()
+        Args:
+            mode (str | None, optional): _description_. Defaults to None.
 
-        self._draw_frame()
+        Raises:
+            ValueError: if render() is called despite initially setting render_mode as None.
 
-        if mode == "human":
-            assert self._window is not None
-            self._window.blit(self._surface, (0, 0))
-            self._pygame.display.flip()
-            self._pygame.time.delay(int(1000 / self.metadata["render_fps"]))
-            return None
-        elif mode == "rgb_array":
-            arr = self._pygame.surfarray.array3d(self._surface)  # (W,H,3)
-            return np.transpose(arr, (1, 0, 2))  # (H,W,3) like gymnasium expects
+        Returns:
+            np.ndarray | None: np.ndarray corresponds to render_mode=rgb_array,
+              and None corresponds to human (renders in the designated PyGame instance)
+        """
+        if not self._renderer:
+            raise ValueError("render_mode was None when env was created.")
+        return self._renderer.render(self._state)
 
     def close(self):
         """Closes the environment, performing some basic cleanup of resources."""
-        if self._pygame is not None:
-            self._pygame.quit()
-            self._pygame = self._window = self._surface = self._font = None
-
+        if self._renderer:
+            self._renderer.close()
+            self._renderer = None
     # ──────────────────────────────────────────────────────────────────────────────── #
     #                                 Private helpers                                  #
     # ──────────────────────────────────────────────────────────────────────────────── #
@@ -212,64 +196,6 @@ class MontyHallEnv(gym.Env):
 
         self._phase = Phase.DONE
         return True, reward
-
-    # ──────────────────────────────────────────────────────────────────────────────── #
-    #                                 PyGame helpers                                   #
-    # ──────────────────────────────────────────────────────────────────────────────── #
-    def _init_pygame(self):
-        """(Lazily) Initialises PyGame, setting up the display window and surface as per the set render_mode"""
-        import pygame  # local import, allowing keeping the dependency optional until used
-
-        pygame.init()
-        pygame.font.init()
-
-        self._pygame = pygame  # stash module reference for later use
-
-        width = self.n_doors * 80 + 20  # 80px per door + margins
-        height = 160
-        if self.render_mode == "human":
-            self._window = pygame.display.set_mode((width, height))
-            pygame.display.set_caption("Monty Hall")
-        else:
-            self._window = None
-
-        # Off‑screen surface that we draw every frame
-        self._surface = pygame.Surface((width, height))
-        self._font = pygame.font.SysFont(None, 36)
-
-    def _draw_frame(self):
-        """Draw current environment state onto ``self._surface``."""
-        pygame = self._pygame  # type: ignore
-        assert pygame is not None and self._surface is not None
-        self._surface.fill((30, 30, 30))  # background
-
-        for idx, symbol in enumerate(self._state):
-            x = 10 + idx * 80
-            y = 20
-            rect = pygame.Rect(x, y, 60, 100)
-
-            if symbol == 0:  # closed, unknown
-                color = (160, 160, 160)
-                pygame.draw.rect(self._surface, color, rect)
-            elif symbol == 1:  # open goat
-                color = (240, 240, 240)
-                pygame.draw.rect(self._surface, color, rect)
-                text = self._font.render("G", True, (0, 0, 0))
-                self._surface.blit(text, text.get_rect(center=rect.center))
-            elif symbol == 2:  # open car
-                color = (240, 240, 240)
-                pygame.draw.rect(self._surface, color, rect)
-                text = self._font.render("C", True, (0, 0, 0))
-                self._surface.blit(text, text.get_rect(center=rect.center))
-            elif symbol == 3:  # closed & currently chosen
-                color = (80, 160, 240)
-                pygame.draw.rect(self._surface, color, rect)
-            else:  # should never occur
-                color = (255, 0, 0)
-                pygame.draw.rect(self._surface, color, rect)
-
-            # Door outline
-            pygame.draw.rect(self._surface, (0, 0, 0), rect, width=2)
 
     def _get_obs(self):
         """Returns a copy of the current state vector"""
