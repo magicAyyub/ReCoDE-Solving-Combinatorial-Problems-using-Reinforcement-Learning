@@ -26,7 +26,7 @@ class MontyHallEnv(gym.Env):
         *,
         n_doors: int = 3,
         n_cars: int = 1,
-        render_mode: None | Literal["human", "rgb_array"] = None,
+        render_mode: Literal["human", "rgb_array"] | None = None,
         seed: int | None = None,
     ) -> None:
         """Initialises the customizable Monty Hall environment.
@@ -36,7 +36,7 @@ class MontyHallEnv(gym.Env):
             n_cars (int, optional): Number of cars behind doors, the rest of doors will be goats.
               Defaults to 1.
             render_mode (Literal or None): rendering mode of the environment. Defaults to None (no rendering needed).
-            seed (Int or None): controls the random number generation. Note that, setting this
+            seed (int or None): controls the random number generation. Note that, setting this
              will cause deterministic behaviour, mostly useful for debugging only. Defaults to None (random seed).
 
         Raises:
