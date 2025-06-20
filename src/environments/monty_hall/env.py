@@ -88,8 +88,7 @@ class MontyHallEnv(gym.Env):
         super().reset(seed=seed)
         self._reset_state()
 
-        if self.render_mode is not None:
-            self.render()
+        self.render()
         return self._get_obs(), self._get_info()
 
     def step(self, action: int):
