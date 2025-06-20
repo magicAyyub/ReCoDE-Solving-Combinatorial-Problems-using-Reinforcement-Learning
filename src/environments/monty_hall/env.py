@@ -1,5 +1,4 @@
-"""env.py
-
+"""
 A Monty Hall environment implementation in Gymnasium, customizable with the number of doors and cars.
 """
 
