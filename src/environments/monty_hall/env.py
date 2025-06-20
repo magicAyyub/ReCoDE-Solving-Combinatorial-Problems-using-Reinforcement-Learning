@@ -63,8 +63,6 @@ class MontyHallEnv(gym.Env):
         # Action Space: Discrete choice, given the number of doors
         self.action_space = spaces.Discrete(self.n_doors)
 
-        # ─── PyGame placeholders (lazily initialised) ───
-        self._pygame = self._window = self._surface = self._font = None
 
         # ─── renderer (optional) ───
         self._renderer: MontyHallPygameRenderer | None = None
