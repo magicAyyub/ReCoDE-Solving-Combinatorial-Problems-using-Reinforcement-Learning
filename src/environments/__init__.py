@@ -1,1 +1,1 @@
-from .monty_hall import *
+from .monty_hall import MontyHallEnv
