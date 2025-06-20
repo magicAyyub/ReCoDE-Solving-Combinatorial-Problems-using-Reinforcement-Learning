@@ -142,6 +142,9 @@ class MontyHallEnv(gym.Env):
             np.ndarray | None: np.ndarray corresponds to render_mode=rgb_array,
               and None corresponds to human (renders in the designated PyGame instance)
         """
+        if self.render_mode is None:
+            return None
+            
         if not self._renderer:
             raise ValueError("render_mode was None when env was created.")
         return self._renderer.render(self._state)
