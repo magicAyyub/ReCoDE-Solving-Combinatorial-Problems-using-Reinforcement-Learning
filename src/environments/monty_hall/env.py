@@ -125,8 +125,7 @@ class MontyHallEnv(gym.Env):
         elif self._phase is Phase.AFTER_REVEAL:
             terminated, reward = self._choose_final(action)
 
-        if self.render_mode is not None:
-            self.render()
+        self.render()
         return self._get_obs(), reward, terminated, truncated, self._get_info()
 
     def render(self, mode: str | None = None):
