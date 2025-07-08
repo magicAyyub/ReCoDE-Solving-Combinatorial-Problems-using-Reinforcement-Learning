@@ -3,7 +3,7 @@ import gymnasium as gym
 from gymnasium import spaces
 
 
-class DiscreteMontyHallObsWrapper(gym.ObservationWrapper):
+class MontyHallDiscreteWrapper(gym.ObservationWrapper):
     """
     Flattens Monty Hall's MultiDiscrete observation (length = n_doors,
     values ∈ {0,1,2,3}) into one Discrete index ∈ [0, 4**n_doors - 1].

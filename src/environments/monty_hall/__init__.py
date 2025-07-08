@@ -1,2 +1,2 @@
 from .env import MontyHallEnv
-from .discrete_wrapper import DiscreteMontyHallObsWrapper
+from .discrete_wrapper import MontyHallDiscreteWrapper
