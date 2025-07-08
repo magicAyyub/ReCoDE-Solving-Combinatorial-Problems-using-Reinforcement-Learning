@@ -230,7 +230,7 @@ class MontyHallEnv(gym.Env):
             "car_doors": self._car_doors.tolist(),
             "chosen_door": self._chosen_door,
             "phase": self._phase.name,
-            "action_mask": self._get_action_mask().tolist(),
+            "action_mask": self._get_action_mask(),
         }
 
 
