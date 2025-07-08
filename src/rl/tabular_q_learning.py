@@ -114,17 +114,27 @@ class QLearningAgent:
     # ──────────────────────────────────────────────────────────────────────────────── #
     #                                 Private helpers                                  #
     # ──────────────────────────────────────────────────────────────────────────────── #
-    def _select_action(self, state_idx: int) -> int:
+    def _select_action(self, state_idx: int, action_mask: np.ndarray | None = None) -> int:
         """Sample an action via an $\varepsilon$-greedy policy.
 
         Args:
             state_idx (int): Discrete state identifier obtained from the environment.
+            action_mask : 1-D np.ndarray | None
+                Binary vector (1 → legal, 0 → illegal).  If None, we assume
+                every action is legal.
 
         Returns:
             int: Index of the chosen action.
         """
+        # • Exploration
         if random.random() < self.epsilon:
-            return self.environment.action_space.sample()
+            return int(self.environment.action_space.sample(mask=action_mask))
+        
+        # • Exploitation: arg-max over the same legal set
+        if action_mask is not None:
+            legal = np.flatnonzero(action_mask)          # indices where mask==1
+            best_idx = np.argmax(self.action_value_table[state_idx, legal])
+            return int(legal[best_idx])
         return int(np.argmax(self.action_value_table[state_idx]))
 
     def _update_action_value_table(
@@ -133,6 +143,7 @@ class QLearningAgent:
         action_idx: int,
         reward: float,
         next_state_idx: int,
+        next_mask: np.ndarray
     ) -> None:
         """Apply the one-step Q-learning update rule.
 
@@ -141,12 +152,17 @@ class QLearningAgent:
             action_idx (int): Index of the action $a_t$ taken in $s_t$.
             reward (float): Immediate scalar reward $r_{t+1}$.
             next_state_idx (int): Index of the successor state $s_{t+1}$.
+            next_mask (np.ndarray): boolean array of next action mask
         """
-        best_next_action: int = int(np.argmax(self.action_value_table[next_state_idx]))
-        td_target: float = reward + self.discount_factor * self.action_value_table[
-            next_state_idx, best_next_action
-        ]
-        td_error: float = td_target - self.action_value_table[state_idx, action_idx]
+        if next_mask is not None:
+            legal_next = np.flatnonzero(next_mask)
+            next_max = (np.max(self.action_value_table[next_state_idx, legal_next])
+                        if legal_next.size else 0.0)
+        else:
+            next_max = np.max(self.action_value_table[next_state_idx])
+            
+        td_target = reward + self.discount_factor * next_max
+        td_error  = td_target - self.action_value_table[state_idx, action_idx]
         self.action_value_table[state_idx, action_idx] += self.learning_rate * td_error
 
     # ──────────────────────────────────────────────────────────────────────────────── #
@@ -179,19 +195,21 @@ class QLearningAgent:
         converged_wall_time: float = 0.0
 
         for episode_idx in range(episodes):
-            state_idx, _ = self.environment.reset(seed=self.config.seed)
+            state_idx, info = self.environment.reset(seed=self.config.seed)
+            action_mask = info.get("action_mask")
             final_reward: float = 0.0
 
             for _ in range(self.config.max_steps_per_episode):
-                action_idx: int = self._select_action(state_idx)
-                next_state_idx, reward, terminated, truncated, _ = self.environment.step(
+                action_idx: int = self._select_action(state_idx, action_mask)
+                next_state_idx, reward, terminated, truncated, info = self.environment.step(
                     action_idx
                 )
 
                 self._update_action_value_table(
-                    state_idx, action_idx, reward, next_state_idx
+                    state_idx, action_idx, reward, next_state_idx, info.get("action_mask")
                 )
                 state_idx = next_state_idx
+                action_mask = info.get("action_mask")
                 final_reward = reward
 
                 if terminated or truncated:
@@ -225,20 +243,25 @@ class QLearningAgent:
         return episode_rewards, converged_episode, converged_wall_time
 
     def test(self, episodes: int = 10) -> None:
-        """Evaluate the greedy policy (no exploration, no learning).
+        """Evaluate a policy (no exploration, no learning), a quick demo run using a rollout of a trained policy.
 
         Args:
             episodes (int, optional): Number of evaluation episodes. Defaults to ``10``.
         """
         for episode_idx in range(1, episodes + 1):
-            state_idx, _ = self.environment.reset(seed=self.config.seed)
+            state_idx, info = self.environment.reset(seed=self.config.seed)
+            mask = info["action_mask"]
             self.environment.render()
 
             for _ in range(self.config.max_steps_per_episode):
-                action_idx: int = int(np.argmax(self.action_value_table[state_idx]))
-                state_idx, reward, terminated, truncated, _ = self.environment.step(
+                legal = np.flatnonzero(mask)
+                best = legal[np.argmax(self.action_value_table[state_idx, legal])]
+                action_idx = int(best)
+                
+                state_idx, reward, terminated, truncated, info = self.environment.step(
                     action_idx
                 )
+                mask = info["action_mask"]
                 self.environment.render()
 
                 if terminated or truncated:
