@@ -45,7 +45,8 @@ you must include a relevant section that helps with learning this library.
 
 ### Academic 📚
 
-- Intermediate familiarity with Python is recommended; basic knowledge of Python can suffice
+- Basic familiarity with Python & basic programming skills is required to solve the exercises notebooks
+- Some math background in the basics of set theory and probability theory is helpful but not required
 
 ### System 💻
 
