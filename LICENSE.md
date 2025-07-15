@@ -1,6 +1,6 @@
 BSD 3-Clause License
 
-Copyright (c) 2022-2025, Imperial College London
+Copyright (c) 2022-2026, Imperial College London
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

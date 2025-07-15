@@ -1,65 +1,36 @@
-<!--
-This README template is designed with dual purpose.
-
-It should help you think about and plan various aspects of your
-exemplar. In this regard, the document need not be completed in
-a single pass. Some sections will be relatively straightforward
-to complete, others may evolve over time.
-
-Once complete, this README will serve as the landing page for
-your exemplar, providing learners with an outline of what they
-can expect should they engage with the work.
-
-Recall that you are developing a software project and learning
-resource at the same time. It is important to keep this in mind
-throughout the development and plan accordingly.
--->
-
 # Solving Combinatorial Problems using Reinforcement Learning
+Combinatorial optimization problems are frequently characterized by being intractable for classical algorithms or prone to suboptimal solutions. Such problems naturally arise in logistics (e.g., vehicle routing), scheduling (e.g., job shop), network design (e.g., flow), finance (e.g., portfolio selection), and beyond. Even minor improvements in these domains can yield substantial benefits in cost, efficiency, or strategy. However, designing heuristics and metaheuristics to tackle their complexity is time-consuming.
 
-<!-- Roadmap -->
-# Roadmap
-- [X] Define the reinforcement learning algorithm(s) (**Thursday 22nd May**)
-    - [X] Tabular Q-learning (Thursday 22nd May)
-    - [X] Stochastic DQN(Thursday 22nd May)
-- [X] First sequential-decision making environment: Monty Hall problem (**Friday 13th June**)
-- [ ] Second sequential-decision making environment: Dynamic Sets, Graph Colouring problem, or Knapsack problem (**Monday 23rd June**)
-- [ ] Hyperparameter tuning and running of experiments as defined in a Jupyter notebook, using the defined interfaces of the two algorithms with *Weights & Biases*. (**Friday 27th June**)
-    - [ ] Add Weights & Biases integration to the two RL algorithms for better experimental tracking practices (Friday 27th June)
-- [ ] Define any unit-tests (with `pytest`) and any `rustlings` style exercises for the RL algorithms and environments themselves, by using `deterministic=True` in the config and setting a `seed` in the config (**Wednesday 9th July**)
-- [ ] Add notebook documentation/literate programming documentation (**Monday 14th July**)
-- [ ] Create a more informative README.md (**Friday 18th July**)
-- [ ] Update all the documentation on the website/gh-pages, ensure all docs are neat and teady (**Wednesday 23rd July**)
+**Reinforcement Learning** (RL),  has excelled at sequential decision-making tasks in fields ranging from autonomous driving and industrial control to robotics, protein folding, theorem proving, and multiagent games such as Chess and Go, where it has achieved superhuman performance
 
+In this exemplar, we will focus on learning to use Reinforcement Learning for solving sequential combinatorial problems, where an optimal strategy involves taking specific actions in a sequence while also responding to a probabilistic setting (environment). Notably, Reinforcement Learning is able to learn the state and action space, so is able to effectively search these spaces for optimal solutions as opposed to exhaustive searches in classical algorithms, without any heuristics that require expert knowledge to correctly derive.
 
-<!-- A brief description of your exemplar, which may include an image -->
-This is a brief abstract of my exemplar, which includes a representative image.
-![Scikit Camera Image](docs/assets/readme-img.png)
+We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply Reinforcement Learning for any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for a variant of the Dynamic Vehicle Routing problem which simulates a food-delivery app.
+
+<!-- ![Scikit Camera Image](docs/assets/readme-img.png) -->
 
 <!-- Author information -->
-This exemplar was developed at Imperial College London by (YOUR NAME) in
-collaboration with (RSE MENTOR) from Research Software Engineering and
-(RCDS MENTOR) from Research Computing & Data Science at the Early Career
+This exemplar was developed at Imperial College London by Omar Adalat in
+collaboration with Dr. Diego Alonso Alvarez from Research Software Engineering and
+Dr. Jesús Urtasun Elizari from Research Computing & Data Science at the Early Career
 Researcher Institute.
 
-
-<!-- Learning Outcomes. 
-Aim for 3 - 4 points that illustrate what knowledge and
-skills will be gained by studying your ReCoDE exemplar. -->
 ## Learning Outcomes 🎓
 
 After completing this exemplar, students will:
 
-- Learning Outcome 1
-- Learning Outcome 2
-- Learning Outcome 3
+- Explain the core principles of Reinforcement Learning, and be able to identify when and where it is applicable to a problem space, with a particular focus on combinatorial problems for this project.
+- Develop an implementation of a foundational algorithm, Tabular Q Learning, starting from basic principles and concepts.
+- Gain the ability to perform experimental validation of the trained Reinforcement Learning algorithm, visualising the learning over training episodes.
+- Design hyperparameter tuning configurations that can automatically be applied to retrieve the optimal set of hyperparameters.
+- Generalise to non-supplied environments by learning how to create your own Reinforcement Learning environment, allowing you to apply Reinforcement Learning to any problem space that you are interested in.
 
 
 <!-- Audience. Think broadly as to who will benefit. -->
 ## Target Audience 🎯
+This exemplar is broadly applicable to anyone interested in solving sequential decision problems, which comes up ubiquitously across many domains and industries (e.g. protein synthesis, self-driving cars, planning & scheduling, and strategic games). Specifically, although we focus on sequential combinatorial problems which are a specific flavour of sequential decision problems, the underlying concepts are the same between both.
 
-Who will benefit from studying this exemplar.
-
+Our exemplar suitable for students, researchers and engineers alike, and academic prerequisite knowledge is not assumed, aside from some confidence in using Python.
 
 <!-- Requirements.
 What skills and knowledge will students need before starting?
@@ -74,38 +45,37 @@ you must include a relevant section that helps with learning this library.
 
 ### Academic 📚
 
-- Required skills/knowledge (e.g. programming languages, libraries, theory, courses)
+- Intermediate familiarity of Python is recommended; basic knowledge of Python can suffice
 
 ### System 💻
 
-- System requirements (e.g. Python 3.11+, Anaconda, 50 GB disk space, etc.)
-- Hardware or HPC requirements (if any)
-
+- [Astral uv's](https://docs.astral.sh/uv/) Python package and project manager
+- 10 GB of disk space
 
 <!-- Quick Start Guide. Tell learners how to engage with the exemplar. -->
 ## Getting Started 🚀
 
-e.g. Step-by-step guide:
+1. Start by cloning the repository, either using the GitHub interface or Git directly (`git clone https://github.com/ImperialCollegeLondon/ReCoDE-Solving-Combinatorial-Problems-using-Reinforcement-Learning`).
+2. Install Astral's `uv` if not already installed from the following URL: https://docs.astral.sh/uv/
+3. Run the command `uv sync` in the cloned repository directory. This will install the correct version of Python (scoped to the directory under `uv`) and install all dependencies needed, included to run the notebooks.
+4. Navigate to the four notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
 
-1. Start by (instruction).
-2. Visit the sections of this notebook in some particular order.
-3. Attempt exercises `1a`, `1b`, etc.
-4. Progress to advanced materials in the Github repository linked here.
-5. Compare with solutions available in the `solutions` folder.
-
-
-<!-- Background. Tell learners about why this exemplar is useful. -->
 ## Disciplinary Background 🔬
      
-Briefly describe how this project fits in your discipline, why you chose
-to work on it, and what other disciplines may find it useful.
+Reinforcement Learning is a powerful learning paradigm in Artificial Intelligence & Computer Science. While Deep Learning and general Machine Learning are very interesting, often the focus is on making a single isolated decision as in the tasks of classification or regression. Reinforcement Learning, which at the state-of-the-art level also uses Deep Learning for effective learning, is important to learn and master for solving more complex tasks that involve sequential decisions.
 
+Specifically, as it solves sequential decision problems, it is incredibly useful in an interdisciplinary manner for various problems that arise such as the aforementioned: scheduling, protein synthesis, finance, autonomous vehicles and beyond.
 
 <!-- Software. What languages, libraries, software you use. -->
 ## Software Tools 🛠️
 
-Programming language(s), libraries, and scientific software used.
-
+- Python, with version and dependencies managed by Astral's uv
+- Gymnasium, allowing to define custom RL environments which conform to a standard interface
+- Weights & Biases, for experiment tracking best practices and hyperparameter tuning
+- Pygame, for visualisation of the environments
+- Matplotlib, for visualisation of training results by plotting charts and diagrams
+- Pytest, for unit testing
+- Jupyter Notebooks, for literate programming & interactive content
 
 <!-- Repository structure. Explain how your code is structured. -->
 ## Project Structure 🗂️
@@ -115,12 +85,14 @@ Overview of code organisation and structure.
 ```
 .
 ├── notebooks
-│ ├── ex1.ipynb
+│ ├── 1-intro-to-rl.ipynb
+│ ├── 2-tabular-q-learning.ipynb
+│ ├── 3-experiments.ipynb
+│ ├── 4-custom-environment-dynamic-vehicle-routing.ipynb
 ├── src
-│ ├── file1.py
-│ ├── file2.cpp
-│ ├── ...
-│ └── data
+│ ├── monty_hall
+│ ├── dynamic_vehicle_routing
+│ ├── rl
 ├── docs
 └── test
 ```
@@ -129,102 +101,43 @@ Code is organised into logical components:
 
 - `notebooks` for tutorials and exercises
 - `src` for core code, potentially divided into further modules
-- `data` within `src` for datasets
 - `docs` for documentation
 - `test` for testing scripts
-
-
-<!-- Roadmap.
-Identify the project core (a minimal working example). This
-is what you should develop first, ideally by week 6. Defining
-a core helps ensure that, despite a tight timeline, we will end
-up with a complete project.
-
-Identify project extensions. These are additional features that
-you will implement after the core of the project is finished; you
-could also propose extensions as open-ended exercises for the ReCoDE
-audience.
-
-Outline the process of creating the exemplar as a project roadmap
-with individual steps. This will help you with defining the scope of 
-the project. When you think about this, imagine that you are explaining
-it to a new PhD student. Assume that this student is from a related (but
-not necessarily same) discipline. They can code but have never undertaken
-a larger project. The steps should follow logical development of the
-project and good practice. Each will be relatively independent and contain
-its own learning annotation and links to other learning materials if
-appropriate. The learning annotation is going to form a significant portion
-of your efforts.
-
-Learning annotations will evolve as we go along but planning now will be useful
-in defining your exemplar steps. Remember that active learning is generally more
-valuable than just reading information, so small exercises that build on previous
-steps can really help your students to understand the software development process.
-You can include videos, text, charts, images, flowcharts, storyboards, or anything
-creative that you may think of.
-
-Completed tasks are marked with an x between the square brackets.
--->
-## Roadmap 🗺️
-
-### Core 🧩
-
-- [x] Data ingestion pipeline
-    * [x] Tutorial with small data exercise
-- [x] Core analysis algorithms
-    * [x] Documentation with worked example
-- [ ] Basic visualisation tools
-    * [ ] Mini-project: "Create your first plot"
-- [ ] Results export functionality
-    * [ ] Usage tutorial with export task
-    * [ ] Short video walkthrough *(planned)*
-- [ ] Automated testing suite
-    * [ ] Debugging challenge
-- [ ] Documentation for core methods
-
-### Extensions 🔌
-
-- [ ] Advanced statistical models
-    * [ ] Example notebook with exercises
-- [ ] Interactive dashboard
-    * [ ] Exercise: Build a simple component
-- [ ] Multi-format data import/export
-    * [ ] Guide with hands-on tasks
-- [ ] Collaboration tools integration
-    * [ ] Exercise: Set up collaborative workflow
-    * [ ] Include diagram of workflow *(optional)*
-- [ ] Extended visualisation options
-    * [ ] Creative task: Design a custom plot
-
-<!-- Data availability (remove this section if no data used) -->
-## Data 📊
-
-List datasets used with:
-
-- Licensing info
-- Where they are included (in the repo or external links)
-
 
 <!-- Best practice notes. -->
 ## Best Practice Notes 📝
 
-- Code testing and/or test examples
-- Use of continuous integration (if any)
-- Any other software development best practices
+- Package (dependency) management and Python version management is provided by `uv`, which allows a perfectly replicable development environment
+- Experiments are stored and tracked using [Weights & Biases](https://wandb.ai), which allows long-term access to results of experiments, accompanied by all necessary information to replicate such experiments such as hyperparameters
 
-<!-- Estimate the time it will take for a learner to progress through the exemplar. -->
 ## Estimated Time ⏳
 
-| Task       | Time    |
-| ---------- | ------- |
-| Reading    | 3 hours |
-| Practising | 3 hours |
+| Task                                                    | Time      |
+| ------------------------------------------------------- | --------- |
+| Notebook 1) Intro to RL                                 | 1.5 hours |
+| Notebook 2) Tabular Q Learning                          | 5 hours   |
+| Notebook 3) Experiments                                 | 2 hours   |
+| Notebook 4) Custom environment: Dynamic Vehicle Routing | 4 hours   |
 
 
 <!-- Any references, or other resources. -->
 ## Additional Resources 🔗
 
-- Relevant sources, websites, images, AOB.
+* For building your Reinforcement Learning knowledge:
+    * [Mastering Reinforcement Learning](https://gibberblot.github.io/rl-notes/index.html#), which is a book accompanied by videos, providing an excellent overview of the various Reinforcement Learning methods out there
+    * [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book-2nd.html), a seminal book with its latest edition published in 2018, by Richard S. Sutton and Andrew G. Barto. This book is considered foundational, and both authors heavily contributed to Reinforcement Learning research and helped start the field. However, this book is more on the theoretical side.
+    * [Spinning Up in Deep RL by OpenAI](https://spinningup.openai.com/en/latest/), which provides a great overview of the state-of-the-art methods (e.g. PPO and actor-critic methods), particularly with deep reinforcement learning.
+        * If you are not familiar with Deep Learning, consider looking at:
+            * [Dive into Deep Learning](https://d2l.ai/), free online book, with code accompanying each section
+            * [fast.ai courses](https://www.fast.ai/), covering advanced deep learning methods from the foundations accompanied by practical implementations
+* Additional combinatorial environments are available at:
+    * [Jumanji](https://github.com/instadeepai/jumanji)
+    * [or-gym](https://github.com/hubbs5/or-gym), or stands for Operations Research 
+* Specifically for attaining better performance in combinatorial RL, you may want to investigate:
+    * More advanced exploration methods, other than greedy-epsilon, starting with Boltzmann
+    *  [Pointer Networks](https://proceedings.neurips.cc/paper_files/paper/2015/file/29921001f2f04bd3baee84a12e98098f-Pape.pdf), used by some methods such as [AlphaStar](https://deepmind.google/discover/blog/alphastar-mastering-the-real-time-strategy-game-starcraft-ii/)
+    * [Stochastic Q Learning](https://arxiv.org/abs/2405.10310) for handling large action spaces
+    * Abstraction methods for lowering the complexity of the state and action space
 
 <!-- LICENCE.
 Imperial prefers BSD-3. Please update the LICENSE.md file with the current year.
