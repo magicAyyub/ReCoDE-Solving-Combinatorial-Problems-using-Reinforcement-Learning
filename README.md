@@ -1,11 +1,11 @@
 # Solving Combinatorial Problems using Reinforcement Learning
 Combinatorial optimization problems are frequently characterized by being intractable for classical algorithms or prone to suboptimal solutions. Such problems naturally arise in logistics (e.g., vehicle routing), scheduling (e.g., job shop), network design (e.g., flow), finance (e.g., portfolio selection), and beyond. Even minor improvements in these domains can yield substantial benefits in cost, efficiency, or strategy. However, designing heuristics and metaheuristics to tackle their complexity is time-consuming.
 
-**Reinforcement Learning** (RL),  has excelled at sequential decision-making tasks in fields ranging from autonomous driving and industrial control to robotics, protein folding, theorem proving, and multiagent games such as Chess and Go, where it has achieved superhuman performance
+**Reinforcement Learning** (RL) has excelled at sequential decision-making tasks in fields ranging from autonomous driving and industrial control to robotics, protein folding, theorem proving, and multiagent games such as chess and go, where it has achieved superhuman performance.
 
-In this exemplar, we will focus on learning to use Reinforcement Learning for solving sequential combinatorial problems, where an optimal strategy involves taking specific actions in a sequence while also responding to a probabilistic setting (environment). Notably, Reinforcement Learning is able to learn the state and action space, so is able to effectively search these spaces for optimal solutions as opposed to exhaustive searches in classical algorithms, without any heuristics that require expert knowledge to correctly derive.
+In this exemplar, we will focus on learning to use Reinforcement Learning for solving sequential combinatorial problems, where an optimal strategy involves taking specific actions in a sequence while also responding to a probabilistic setting (environment). Notably, Reinforcement Learning is able to learn the state and action space, so it is able to effectively search these spaces for optimal solutions as opposed to exhaustive searches in classical algorithms, without any heuristics that require expert knowledge to correctly derive.
 
-We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply Reinforcement Learning for any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for a variant of the Dynamic Vehicle Routing problem which simulates a food-delivery app.
+We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply RL to any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for a variant of the Dynamic Vehicle Routing problem which simulates a food-delivery app.
 
 <!-- ![Scikit Camera Image](docs/assets/readme-img.png) -->
 
@@ -45,11 +45,12 @@ you must include a relevant section that helps with learning this library.
 
 ### Academic 📚
 
-- Intermediate familiarity of Python is recommended; basic knowledge of Python can suffice
+- Intermediate familiarity with Python is recommended; basic knowledge of Python can suffice
 
 ### System 💻
 
-- [Astral uv's](https://docs.astral.sh/uv/) Python package and project manager
+- [Astral's uv](https://docs.astral.sh/uv/) Python package and project manager
+- An integrated development environment (IDE) for developing and running Python, [Visual Studio Code (VS Code)](https://code.visualstudio.com/) with Python & Jupyter Notebook extensions is the easiest to set up and use. VS Code should automatically prompt you to install the required extensions that you need, but you can refer to here for the [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) and the [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) extension is available for notebook support.
 - 10 GB of disk space
 
 <!-- Quick Start Guide. Tell learners how to engage with the exemplar. -->
@@ -57,8 +58,9 @@ you must include a relevant section that helps with learning this library.
 
 1. Start by cloning the repository, either using the GitHub interface or Git directly (`git clone https://github.com/ImperialCollegeLondon/ReCoDE-Solving-Combinatorial-Problems-using-Reinforcement-Learning`).
 2. Install Astral's `uv` if not already installed from the following URL: https://docs.astral.sh/uv/
-3. Run the command `uv sync` in the cloned repository directory. This will install the correct version of Python (scoped to the directory under `uv`) and install all dependencies needed, included to run the notebooks.
-4. Navigate to the four notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
+3. Run the command `uv sync` in the cloned repository directory. This will install the correct version of Python (scoped to the directory under `uv`) and gather all dependencies needed.
+4. Create a virtual environment under which the Jupyter Notebooks will run under, which will be scoped to the project directory. Simply run `uv venv --python 3.12`. When running any notebook, use the virtual environment created for Python 3.12 in the current directory's path, VS Code will give you a list selection of virtual environments to run under (you can also switch this in the top right of a notebook as of the time of writing).
+5. Navigate to the four notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
 
 ## Disciplinary Background 🔬
      
@@ -122,6 +124,7 @@ Code is organised into logical components:
 ## Best Practice Notes 📝
 
 - Package (dependency) management and Python version management is provided by `uv`, which allows a perfectly replicable development environment
+- Reference code is entirely documented and commented using [Google's Style of Python Docstrings](https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html#example-google)
 - Experiments are stored and tracked using [Weights & Biases](https://wandb.ai), which allows long-term access to results of experiments, accompanied by all necessary information to replicate such experiments such as hyperparameters
 
 ## Estimated Time ⏳
