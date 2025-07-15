@@ -5,7 +5,7 @@ Combinatorial optimization problems are frequently characterized by being intrac
 
 In this exemplar, we will focus on learning to use Reinforcement Learning for solving sequential combinatorial problems, where an optimal strategy involves taking specific actions in a sequence while also responding to a probabilistic setting (environment). Notably, Reinforcement Learning is able to learn the state and action space, so it is able to effectively search these spaces for optimal solutions as opposed to exhaustive searches in classical algorithms, without any heuristics that require expert knowledge to correctly derive.
 
-We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply RL to any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for a variant of the Dynamic Vehicle Routing problem which simulates a food-delivery app.
+We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply RL to any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for the seminal News Vendor problem from inventory management.
 
 <!-- ![Scikit Camera Image](docs/assets/readme-img.png) -->
 
@@ -91,7 +91,7 @@ Overview of code organisation and structure.
 │ ├── 1-intro-to-rl.ipynb
 │ ├── 2-tabular-q-learning.ipynb
 │ ├── 3-experiments.ipynb
-│ ├── 4-custom-environment-dynamic-vehicle-routing.ipynb
+│ ├── 4-custom-environment-news-vendor.ipynb
 ├── src
 │ ├── environments
 │ ├───── monty_hall
@@ -99,7 +99,7 @@ Overview of code organisation and structure.
 │       │          └── state.py
 │       │          └── renderer.py
 │       │          └── discrete_wrapper.py
-│ ├───── dynamic_vehicle_routing
+│ ├───── news_vendor
 │       │          └── env.py
 │       │          └── state.py
 │       │          └── renderer.py
@@ -116,7 +116,7 @@ Code is organised into logical components:
 - `notebooks` for tutorials and exercises
 - `src` for core code
     - `monty_hall` provides the full implementation of the Monty Hall Gymnasium environment. This is something you are expected to import in for Notebook 3. However, later on you can explore this directory in terms of how everything is implemented, for example the discrete state space wrapper, action masking, and visualisation. It may be useful as a reference for any environments you create in the future!
-    - `dynamic_vehicle_routing` is a full reference/target implementation for Notebook 4.
+    - `news_vendor` is a full reference/target implementation for Notebook 4.
     ` rl` is a reference implementation for Notebook 2, particularly focused on Tabular Q Learning.
 - `docs` for documentation
 - `test` for testing scripts
@@ -135,7 +135,7 @@ Code is organised into logical components:
 | Notebook 1) Intro to RL                                 | 1.5 hours |
 | Notebook 2) Tabular Q Learning                          | 5 hours   |
 | Notebook 3) Experiments                                 | 2 hours   |
-| Notebook 4) Custom environment: Dynamic Vehicle Routing | 4 hours   |
+| Notebook 4) Custom environment: News Vendor             | 4 hours   |
 
 
 <!-- Any references, or other resources. -->
