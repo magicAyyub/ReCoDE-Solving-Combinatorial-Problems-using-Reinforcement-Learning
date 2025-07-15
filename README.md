@@ -90,9 +90,20 @@ Overview of code organisation and structure.
 │ ├── 3-experiments.ipynb
 │ ├── 4-custom-environment-dynamic-vehicle-routing.ipynb
 ├── src
-│ ├── monty_hall
-│ ├── dynamic_vehicle_routing
+│ ├── environments
+│ ├───── monty_hall
+│       │          └── env.py
+│       │          └── state.py
+│       │          └── renderer.py
+│       │          └── discrete_wrapper.py
+│ ├───── dynamic_vehicle_routing
+│       │          └── env.py
+│       │          └── state.py
+│       │          └── renderer.py
+│       │          └── discrete_wrapper.py
 │ ├── rl
+│   │   └── common.py
+│   │   └── tabular_q_learning.py
 ├── docs
 └── test
 ```
@@ -100,7 +111,10 @@ Overview of code organisation and structure.
 Code is organised into logical components:
 
 - `notebooks` for tutorials and exercises
-- `src` for core code, potentially divided into further modules
+- `src` for core code
+    - `monty_hall` provides the full implementation of the Monty Hall Gymnasium environment. This is something you are expected to import in for Notebook 3. However, later on you can explore this directory in terms of how everything is implemented, for example the discrete state space wrapper, action masking, and visualisation. It may be useful as a reference for any environments you create in the future!
+    - `dynamic_vehicle_routing` is a full reference/target implementation for Notebook 4.
+    ` rl` is a reference implementation for Notebook 2, particularly focused on Tabular Q Learning.
 - `docs` for documentation
 - `test` for testing scripts
 
