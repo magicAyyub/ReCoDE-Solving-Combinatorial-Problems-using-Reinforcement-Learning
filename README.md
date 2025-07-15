@@ -149,7 +149,7 @@ Code is organised into logical components:
     * [or-gym](https://github.com/hubbs5/or-gym), or stands for Operations Research 
 * Specifically for attaining better performance in combinatorial RL, you may want to investigate:
     * More advanced exploration methods, other than greedy-epsilon, starting with Boltzmann
-    *  [Pointer Networks](https://proceedings.neurips.cc/paper_files/paper/2015/file/29921001f2f04bd3baee84a12e98098f-Pape.pdf), used by some methods such as [AlphaStar](https://deepmind.google/discover/blog/alphastar-mastering-the-real-time-strategy-game-starcraft-ii/)
+    *  [Pointer Networks](https://proceedings.neurips.cc/paper_files/paper/2015/file/29921001f2f04bd3baee84a12e98098f-Paper.pdf), used by some methods such as [AlphaStar](https://deepmind.google/discover/blog/alphastar-mastering-the-real-time-strategy-game-starcraft-ii/)
     * [Stochastic Q Learning](https://arxiv.org/abs/2405.10310) for handling large action spaces
     * Abstraction methods for lowering the complexity of the state and action space
 
