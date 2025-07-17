@@ -143,7 +143,7 @@ class QLearningAgent:
         action_idx: int,
         reward: float,
         next_state_idx: int,
-        next_mask: np.ndarray
+        next_mask: np.ndarray | None
     ) -> None:
         """Apply the one-step Q-learning update rule.
 
