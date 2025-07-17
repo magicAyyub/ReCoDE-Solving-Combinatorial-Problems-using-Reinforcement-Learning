@@ -1,7 +1,9 @@
 import ipywidgets as widgets
 from IPython.display import display, HTML, Markdown
 
-def _format_case(case):
+CaseType = tuple[any, any] | tuple[any, any, any]
+
+def _format_case(case: CaseType) -> tuple[any, any, str]:
     """Normalise a case into (inp, expected, desc)."""
     if len(case) == 2:
         inp, exp = case
@@ -10,7 +12,7 @@ def _format_case(case):
         inp, exp, desc = case
     return inp, exp, desc
 
-def run_tests(func, cases, *, stop_on_first: bool=False):
+def run_tests(func: callable, cases: list[CaseType], *, stop_on_first: bool=False):
     """ Runs a set of test cases (expected outputs) on a function.
 
     Args:
@@ -47,7 +49,7 @@ def run_tests(func, cases, *, stop_on_first: bool=False):
                 break
     return results
 
-def make_tester(func, cases, stop_on_first: bool = False, *, label: str="Run Tests"):
+def make_tester(func: callable, cases: list[CaseType], stop_on_first: bool = False, *, label: str="Run Tests"):
     """ Return a widget (Button + Output box) that runs the tests when clicked.
     
     Args:
