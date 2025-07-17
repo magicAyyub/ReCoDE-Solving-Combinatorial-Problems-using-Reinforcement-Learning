@@ -117,7 +117,7 @@ Code is organised into logical components:
 - `src` for core code
     - `monty_hall` provides the full implementation of the Monty Hall Gymnasium environment. This is something you are expected to import in for Notebook 3. However, later on you can explore this directory in terms of how everything is implemented, for example the discrete state space wrapper, action masking, and visualisation. It may be useful as a reference for any environments you create in the future!
     - `news_vendor` is a full reference/target implementation for Notebook 4.
-    ` rl` is a reference implementation for Notebook 2, particularly focused on Tabular Q Learning.
+    - ` rl` is a reference implementation for Notebook 2, particularly focused on Tabular Q Learning.
 - `docs` for documentation
 - `test` for testing scripts
 
