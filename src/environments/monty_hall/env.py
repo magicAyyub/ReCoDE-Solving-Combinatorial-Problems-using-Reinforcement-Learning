@@ -198,6 +198,24 @@ class MontyHallEnv(gym.Env):
     def _get_obs(self):
         """Returns a copy of the current state vector"""
         return self._state.copy()
+    
+
+    def _get_action_mask(self) -> np.ndarray:
+        """Binary vector - `1` where the door index is a legal action.
+
+        Returns:
+            1d numpy array: booleans of allowed actions (1) or disallowed (0)
+        """
+        mask = np.zeros(self.n_doors, dtype=np.int8)
+
+        if self._phase is Phase.AWAITING_FIRST_PICK:
+            mask[self._state == DoorState.CLOSED] = 1
+        elif self._phase is Phase.AFTER_REVEAL:
+            legal = (self._state == DoorState.CLOSED) | (
+                self._state == DoorState.CHOSEN
+            )
+            mask[legal] = 1
+        return mask
 
     def _get_info(self):
         """Provides full information of the currently running instance.
@@ -212,6 +230,7 @@ class MontyHallEnv(gym.Env):
             "car_doors": self._car_doors.tolist(),
             "chosen_door": self._chosen_door,
             "phase": self._phase.name,
+            "action_mask": self._get_action_mask(),
         }
 
 
