@@ -142,15 +142,15 @@ Code is organised into logical components:
 
 | Task                                                    | Time      |
 | ------------------------------------------------------- | --------- |
-| Notebook 1) Intro to RL                                 | 1.5 hours |
-| Notebook 2) Tabular Q Learning                          | 5 hours   |
-| Notebook 3) Experiments                                 | 2 hours   |
-| Notebook 4) Custom environment: News Vendor             | 4 hours   |
+| Notebook 1. Intro to RL                                 | 3 hours |
+| Notebook 2. Tabular Q Learning                          | 6 hours   |
+| Notebook 3. Experiments                                 | 2 hours   |
+| Notebook 4. Custom environment: News Vendor             | 4 hours   |
+| Notebook 5. Conclusion                                  | 3 hours   |
 
+**Total time**: 18 hours
 
-<!-- Any references, or other resources. -->
 ## Additional Resources 🔗
-
 * For building your Reinforcement Learning knowledge:
     * [Mastering Reinforcement Learning](https://gibberblot.github.io/rl-notes/index.html#), which is a book accompanied by videos, providing an excellent overview of the various Reinforcement Learning methods out there
     * [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book-2nd.html), a seminal book with its latest edition published in 2018, by Richard S. Sutton and Andrew G. Barto. This book is considered foundational, and both authors heavily contributed to Reinforcement Learning research and helped start the field. However, this book is more on the theoretical side.
@@ -160,7 +160,7 @@ Code is organised into logical components:
             * [fast.ai courses](https://www.fast.ai/), covering advanced deep learning methods from the foundations accompanied by practical implementations
 * Additional combinatorial environments are available at:
     * [Jumanji](https://github.com/instadeepai/jumanji)
-    * [or-gym](https://github.com/hubbs5/or-gym), or stands for Operations Research 
+    * [OR-gym](https://github.com/hubbs5/or-gym), OR stands for Operations Research 
 * Specifically for attaining better performance in combinatorial RL, you may want to investigate:
     * More advanced exploration methods, other than greedy-epsilon, starting with Boltzmann
     *  [Pointer Networks](https://proceedings.neurips.cc/paper_files/paper/2015/file/29921001f2f04bd3baee84a12e98098f-Paper.pdf), used by some methods such as [AlphaStar](https://deepmind.google/discover/blog/alphastar-mastering-the-real-time-strategy-game-starcraft-ii/)
@@ -171,5 +171,4 @@ Code is organised into logical components:
 Imperial prefers BSD-3. Please update the LICENSE.md file with the current year.
 -->
 ## Licence 📄
-
 This project is licensed under the [BSD-3-Clause license](LICENSE.md).
