@@ -5,7 +5,7 @@ description = "An ReCoDE explainer from Imperial College London for solving comb
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "gymnasium>=1.1.1",
+    "gymnasium[other]>=1.1.1",
     "ipykernel>=6.29.5",
     "ipywidgets>=8.1.7",
     "loguru>=0.7.3",
