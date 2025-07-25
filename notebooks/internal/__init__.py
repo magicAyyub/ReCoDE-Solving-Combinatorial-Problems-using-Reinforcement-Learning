@@ -1,0 +1,1 @@
+from .exercises_4_news_vendor import *
