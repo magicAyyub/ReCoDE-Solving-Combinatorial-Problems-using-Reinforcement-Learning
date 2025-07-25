@@ -94,10 +94,11 @@ Overview of code organisation and structure.
 ```
 .
 ├── notebooks
-│ ├── 1-intro-to-rl.ipynb
-│ ├── 2-tabular-q-learning.ipynb
-│ ├── 3-experiments.ipynb
-│ ├── 4-custom-environment-news-vendor.ipynb
+│ ├── 1-Intro-to-RL.ipynb
+│ ├── 2-Tabular-Q-Learning.ipynb
+│ ├── 3-Experiments.ipynb
+│ ├── 4-Custom-Envs-News-Vendor.ipynb
+│ ├── 5-Conclusion.ipynb
 ├── src
 │ ├── environments
 │ ├───── monty_hall
@@ -120,10 +121,13 @@ Overview of code organisation and structure.
 Code is organised into logical components:
 
 - `notebooks` for tutorials and exercises
+    - `solutions` contains full solutions to all exercises, implementing all incomplete functions
+    - `extras` contains notebooks that allow you to interactively visualise the *Monty Hall* and *News Vendor* environments
 - `src` for core code
     - `monty_hall` provides the full implementation of the Monty Hall Gymnasium environment. This is something you are expected to import in for Notebook 3. However, later on you can explore this directory in terms of how everything is implemented, for example the discrete state space wrapper, action masking, and visualisation. It may be useful as a reference for any environments you create in the future!
     - `news_vendor` is a full reference/target implementation for Notebook 4.
     - ` rl` is a reference implementation for Notebook 2, particularly focused on Tabular Q Learning.
+    - `internal` contains code related to setting up exercises' automatic grading.
 - `docs` for documentation
 - `test` for testing scripts
 
