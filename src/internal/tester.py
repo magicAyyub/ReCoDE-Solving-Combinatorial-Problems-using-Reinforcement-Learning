@@ -1,5 +1,7 @@
 import ipywidgets as widgets
 from IPython.display import display, HTML, Markdown
+import copy
+import numpy as np
 
 CaseType = tuple[any, any] | tuple[any, any, any]
 
@@ -28,6 +30,8 @@ def run_tests(func: callable, cases: list[CaseType], *, stop_on_first: bool=Fals
         inp, exp, desc = _format_case(raw)
         label = f"Test {i} " + (f"({desc})" if desc else "") + " —"
         try:
+            inp = copy.deepcopy(inp)
+            
             # Flexible argument passing
             if isinstance(inp, tuple):
                 out = func(*inp)
@@ -36,7 +40,18 @@ def run_tests(func: callable, cases: list[CaseType], *, stop_on_first: bool=Fals
             else:
                 out = func(inp)
             
-            assert out == exp, f"got {out!r}, expected {exp!r}"
+            numeric_like = (
+                isinstance(out, (int, float, complex, np.number, np.ndarray))
+                and isinstance(exp, (int, float, complex, np.number, np.ndarray))
+            )
+            if numeric_like:
+                if not np.allclose(out, exp, rtol=1e-07, atol=0):
+                    raise AssertionError(f"got {out!r}, expected {exp!r}")
+            else:
+                if out != exp:
+                    raise AssertionError(f"got {out!r}, expected {exp!r}")
+            
+            # No assertion error
             results.append((True, f"✅ {label} passed"))
         except AssertionError as err:
             results.append((False, f"❌ {label} failed: {err}"))
