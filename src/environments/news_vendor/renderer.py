@@ -19,42 +19,41 @@ class NewsVendorPygameRenderer:
     _PIPE_FILL = (80, 160, 240)
     _PIPE_BORDER = (0, 0, 0)
 
-    def __init__(
-        self,
-        *,
-        lead_time: int,
-        config,
-        metadata: dict,
-        render_mode: Literal["human", "rgb_array"],
-    ) -> None:
-        import pygame  # defer heavy import until absolutely necessary
-
+    def __init__(self, *, lead_time, config, metadata, render_mode):
+        import pygame
         self._pg = pygame
+        scale       = 1.75
+        scale_font  = 1.25
         self._lead_time = lead_time
-        self._cfg = config
-        self._fps = metadata.get("render_fps", 4)
-        self._mode = render_mode
+        self._cfg       = config
+        self._fps       = metadata.get("render_fps", 4)
+        self._mode      = render_mode
 
         pygame.init()
         pygame.font.init()
 
-        # ── Layout constants ──
-        self._margin = 10
-        self._cell_w = 70
-        self._cell_h = 200  # max bar height
-        text_area_h = 120
+        # --- Layout constants -------------------------------------------------
+        self._margin  = int(10 * scale)
+        self._cell_w  = int(70 * scale)
+        self._cell_h  = int(200 * scale)
+        text_area_h   = int(120 * scale)
 
-        width = self._margin * 2 + lead_time * self._cell_w
-        height = text_area_h + self._cell_h + self._margin * 2
+        # create fonts BEFORE we size the window so we can ask their height
+        self._font_big   = pygame.font.SysFont(None, int(30 * scale_font))
+        self._font_small = pygame.font.SysFont(None, int(22 * scale_font))
+
+        self._step_lbl_h = self._font_small.get_height() + 6          # <─▼ NEW
+
+        width  = self._margin * 2 + lead_time * self._cell_w
+        height = (text_area_h + self._cell_h +
+                  self._step_lbl_h +                 # extra room for “t‑*”
+                  self._margin * 2)                  # top & bottom margins
 
         self._surface = pygame.Surface((width, height))
-        self._window = None
+        self._window  = None
         if render_mode == "human":
-            self._window = pygame.display.set_mode((width, height))
+            self._window = pygame.display.set_mode((width, height), pygame.RESIZABLE)
             pygame.display.set_caption("News Vendor")
-
-        self._font_big = pygame.font.SysFont(None, 30)
-        self._font_small = pygame.font.SysFont(None, 22)
 
     # ────────────────────────────────────────────────────────────────────────── #
     #  Public API                                                              #
@@ -100,8 +99,8 @@ class NewsVendorPygameRenderer:
             f"Price:          {price:6.2f}",
             f"Cost:           {cost:6.2f}",
             f"Holding cost:   {h_cost:6.2f}",
-            f"Lost‑sales pen.:{k_pen:6.2f}",
-            f"μ (demand mean):{mu:6.2f}",
+            f"Lost sales penalty:   {k_pen:6.2f}",
+            f"μ (demand mean):  {mu:6.2f}",
         ]
         for i, line in enumerate(txt_lines):
             txt = self._font_big.render(line, True, self._TEXT_COLOR)
@@ -109,28 +108,28 @@ class NewsVendorPygameRenderer:
 
         # ── 2. Pipeline visualisation ──
         pipeline = s[5:]
-        bar_y_base = surf.get_height() - self._margin  # bottom of bars
+        bar_y_base = surf.get_height() - self._margin - self._step_lbl_h  # <─▲ NEW
         for idx, qty in enumerate(pipeline):
-            x = self._margin + idx * self._cell_w + self._cell_w // 4
-            bar_w = self._cell_w // 2
-            # background slot
-            slot_rect = pg.Rect(x, bar_y_base - self._cell_h, bar_w, self._cell_h)
-            pg.draw.rect(surf, self._PIPE_BG, slot_rect)
-            pg.draw.rect(surf, self._PIPE_BORDER, slot_rect, width=1)
+            x      = self._margin + idx * self._cell_w + self._cell_w // 4
+            bar_w  = self._cell_w // 2
+            slot_r = pg.Rect(x, bar_y_base - self._cell_h, bar_w, self._cell_h)
+            pg.draw.rect(surf, self._PIPE_BG,     slot_r)
+            pg.draw.rect(surf, self._PIPE_BORDER, slot_r, width=1)
 
-            # filled portion
             if qty > 0:
                 h = int(qty / self._cfg.max_order_quantity * self._cell_h)
                 h = max(1, min(h, self._cell_h))
-                fill_rect = pg.Rect(x, bar_y_base - h, bar_w, h)
-                pg.draw.rect(surf, self._PIPE_FILL, fill_rect)
+                pg.draw.rect(surf, self._PIPE_FILL,
+                             pg.Rect(x, bar_y_base - h, bar_w, h))
 
-            # numeric label above bar
             label = self._font_small.render(str(int(qty)), True, self._TEXT_COLOR)
-            label_rect = label.get_rect(midbottom=(x + bar_w // 2, bar_y_base - self._cell_h - 4))
-            surf.blit(label, label_rect)
+            surf.blit(label,
+                      label.get_rect(midbottom=(x + bar_w // 2,
+                                                 bar_y_base - self._cell_h - 4)))
 
             # step annotation
-            step_lbl = self._font_small.render(f"t-{self._lead_time - idx}", True, self._TEXT_COLOR)
-            step_rect = step_lbl.get_rect(midtop=(x + bar_w // 2, bar_y_base + 4))
-            surf.blit(step_lbl, step_rect)
+            step_lbl  = self._font_small.render(f"t-{self._lead_time - idx}",
+                                                True, self._TEXT_COLOR)
+            surf.blit(step_lbl,
+                      step_lbl.get_rect(midtop=(x + bar_w // 2,
+                                                bar_y_base + 4)))
