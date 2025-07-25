@@ -57,17 +57,16 @@ you must include a relevant section that helps with learning this library.
 ### System 💻
 
 - [Astral's uv](https://docs.astral.sh/uv/) Python package and project manager
-- An integrated development environment (IDE) for developing and running Python, [Visual Studio Code (VS Code)](https://code.visualstudio.com/) with Python & Jupyter Notebook extensions is the easiest to set up and use. VS Code should automatically prompt you to install the required extensions that you need, but you can refer to here for the [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) and the [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) extension is available for notebook support.
+- An integrated development environment (IDE) for developing and running Python, [Visual Studio Code (VS Code)](https://code.visualstudio.com/) with Python & Jupyter Notebook extensions is the easiest to set up and use. VS Code should automatically prompt you to install the required extensions that you need, but you can refer to here for the [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) and the [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) extension is available for notebook support
 - 10 GB of disk space
 
-<!-- Quick Start Guide. Tell learners how to engage with the exemplar. -->
 ## Getting Started 🚀
 
 1. Start by cloning the repository, either using the GitHub interface or Git directly (`git clone https://github.com/ImperialCollegeLondon/ReCoDE-Solving-Combinatorial-Problems-using-Reinforcement-Learning`).
-2. Install Astral's `uv` if not already installed from the following URL: https://docs.astral.sh/uv/
+2. Install Astral's `uv` if not already installed from the following URL: [https://docs.astral.sh/uv/](https://docs.astral.sh/uv/)
 3. Run the command `uv sync` in the cloned repository directory. This will install the correct version of Python (scoped to the directory under `uv`) and gather all dependencies needed.
 4. Create a virtual environment under which the Jupyter Notebooks will run under, which will be scoped to the project directory. Simply run `uv venv --python 3.12`. When running any notebook, use the virtual environment created for Python 3.12 in the current directory's path, VS Code will give you a list selection of virtual environments to run under (you can also switch this in the top right of a notebook as of the time of writing).
-5. Navigate to the four notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
+5. Navigate to the five notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
 
 ## Disciplinary Background 🔬
      
