@@ -3,6 +3,12 @@ Combinatorial optimization problems are frequently characterized by being intrac
 
 **Reinforcement Learning** (RL) has excelled at sequential decision-making tasks in fields ranging from autonomous driving and industrial control to robotics, protein folding, theorem proving, and multiagent games such as chess and go, where it has achieved superhuman performance.
 
+<img
+  src="docs/assets/README.png"
+  alt="README Image"
+  style="float: right; width: 35%; height: auto; margin: 0 0 1em 1em;"
+/>  
+
 In this exemplar, we will focus on learning to use Reinforcement Learning for solving sequential combinatorial problems, where an optimal strategy involves taking specific actions in a sequence while also responding to a probabilistic setting (environment). Notably, Reinforcement Learning is able to learn the state and action space, so it is able to effectively search these spaces for optimal solutions as opposed to exhaustive searches in classical algorithms, without any heuristics that require expert knowledge to correctly derive.
 
 We will start by implementing a foundational algorithm, Tabular Q Learning, then learn how to apply it in a pre-supplied environment, involving the famous **Monty Hall** problem, where we will also explore hyperparameter tuning and visualisation of training. After this, we will learn how you can apply RL to any problem space of interest by creating your own environment, where we will walk through an example implementing an environment from scratch for the seminal News Vendor problem from inventory management.
