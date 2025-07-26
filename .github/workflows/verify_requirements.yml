@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
     #   UV_EXPORT_FLAGS: "--no-header --no-dev"
-      UV_EXPORT_FLAGS: ""
+      UV_EXPORT_FLAGS: "--no-header"
       UV_EXPORT_FORMAT: "requirements-txt"
       UV_EXPORT_FILE: ".uv-export.txt"
 
