@@ -38,4 +38,24 @@ for nb_path in notebook_dir.glob("*.ipynb"):
 
         cell.source = re.sub(r'!\[(.*?)\]\((.*?)\)', replace_image, cell.source)
 
+        # Support HTML
+        def replace_img_src(match):
+            prefix, img_path, suffix = match.group(1), match.group(2), match.group(3)
+            full_path = (notebook_dir / img_path).resolve()
+            if not full_path.exists():
+                print(f"  Warning: {img_path} not found")
+                return match.group(0)
+            ext = full_path.suffix[1:]
+            b64 = base64.b64encode(full_path.read_bytes()).decode()
+            datauri = f"data:image/{ext};base64,{b64}"
+            print(f"  Embedded {img_path}")
+            return f"{prefix}{datauri}{suffix}"
+
+        cell.source = re.sub(
+            r'(<img\b[^>]*\bsrc=["\'])([^"\']+)(["\'][^>]*>)',  # prefix, src value, suffix
+            replace_img_src,
+            cell.source,
+            flags=re.IGNORECASE
+        )
+
     nbformat.write(nb, nb_path)
