@@ -1,0 +1,52 @@
+name: Verify requirements.txt matches uv export
+
+on:
+  pull_request:
+    paths:
+      - "pyproject.toml"
+      - "uv.lock"
+      - "requirements.txt"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+    #   UV_EXPORT_FLAGS: "--no-header --no-dev"
+      UV_EXPORT_FLAGS: ""
+      UV_EXPORT_FORMAT: "requirements-txt"
+      UV_EXPORT_FILE: ".uv-export.txt"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Ensure requirements.txt exists
+        run: |
+          if [ ! -f requirements.txt ]; then
+            echo "::error file=requirements.txt::requirements.txt is missing in the repository."
+            exit 1
+          fi
+
+      - name: Export requirements with uv
+        run: |
+          set -euo pipefail
+          # Export from uv.lock / project metadata to a temporary file
+          uv export --format "$UV_EXPORT_FORMAT" $UV_EXPORT_FLAGS --output-file "$UV_EXPORT_FILE"
+
+      - name: Compare with committed requirements.txt
+        run: |
+          set -euo pipefail
+          # Show a unified diff and fail if different
+          if ! git --no-pager diff --no-index --text --unified=3 requirements.txt "$UV_EXPORT_FILE"; then
+            echo ""
+            echo "requirements.txt is out of date."
+            echo "To regenerate locally, run:"
+            echo ""
+            echo "  uv export --format $UV_EXPORT_FORMAT $UV_EXPORT_FLAGS > requirements.txt"
+            echo ""
+            exit 1
+          fi
