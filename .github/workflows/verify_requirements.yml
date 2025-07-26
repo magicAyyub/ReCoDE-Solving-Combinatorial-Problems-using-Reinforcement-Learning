@@ -1,12 +1,12 @@
 name: Verify requirements.txt matches uv export
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    paths:
-      - "pyproject.toml"
-      - "uv.lock"
-      - "requirements.txt"
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   verify:
