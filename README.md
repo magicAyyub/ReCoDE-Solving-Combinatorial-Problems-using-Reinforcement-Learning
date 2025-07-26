@@ -78,11 +78,12 @@ Specifically, as it solves sequential decision problems, it is incredibly useful
 ## Software Tools 🛠️
 
 - Python, with version and dependencies managed by Astral's uv
+- Weights & Biases, a web platform for experiment tracking best practices and hyperparameter tuning
+
+A selection of key Python libraries/packages used are listed below:
 - Gymnasium, allowing to define custom RL environments which conform to a standard interface
-- Weights & Biases, for experiment tracking best practices and hyperparameter tuning
 - Pygame, for visualisation of the environments
 - Matplotlib, for visualisation of training results by plotting charts and diagrams
-- Pytest, for unit testing
 - Jupyter Notebooks, for literate programming & interactive content
 
 <!-- Repository structure. Explain how your code is structured. -->
