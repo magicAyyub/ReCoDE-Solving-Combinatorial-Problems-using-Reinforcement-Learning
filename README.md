@@ -66,7 +66,8 @@ you must include a relevant section that helps with learning this library.
 2. Install Astral's `uv` if not already installed from the following URL: [https://docs.astral.sh/uv/](https://docs.astral.sh/uv/)
 3. Run the command `uv sync` in the cloned repository directory. This will install the correct version of Python (scoped to the directory under `uv`) and gather all dependencies needed.
 4. Create a virtual environment under which the Jupyter Notebooks will run under, which will be scoped to the project directory. Simply run `uv venv --python 3.12`. When running any notebook, use the virtual environment created for Python 3.12 in the current directory's path, VS Code will give you a list selection of virtual environments to run under (you can also switch this in the top right of a notebook as of the time of writing).
-5. Navigate to the five notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
+5. Ensure that your notebook's working directory is set to the root of the project directory (the top level folder that lists `notebooks`, `README.md`, `src`, etc). If you are using VS Code, this is already specified by `.vscode/settings.json` of this repository. If you are using a different IDE, be sure to specify this equivalently, it will be evident that this is working if notebooks are able to properly import all local imports.
+6. Navigate to the five notebooks in the directory `/notebooks/` and complete them in order, running the exercises which will be checked against automated tests and checking the solutions if at any time you are stuck!
 
 ## Disciplinary Background 🔬
      
