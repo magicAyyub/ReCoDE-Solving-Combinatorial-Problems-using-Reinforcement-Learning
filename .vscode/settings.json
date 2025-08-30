@@ -1,3 +1,4 @@
 {
     "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "makefile.configureOnOpen": true,
 }
