@@ -17,9 +17,9 @@ Example:
     >>> agent.train(episodes=5_000)
     >>> agent.test(episodes=100)
 """
-
-from src.rl.common import has_converged
 from __future__ import annotations
+from src.rl.common import has_converged
+
 
 import random
 import time
